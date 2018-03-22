@@ -124,6 +124,10 @@ class DBMAgent(Agent.Movies):
         if votes > 3:
             metadata.rating = float(rating)
 
+        # Year
+        if dbm_dict['year']:
+            metadata.year = int(dbm_dict['year'])
+
         # Title of the film
         metadata.title = dbm_dict['title']
 
@@ -139,6 +143,11 @@ class DBMAgent(Agent.Movies):
         for genre in dbm_dict['genres']:
             metadata.genres.add(genre.strip())
 
+        # Countries
+        metadata.countries.clear()
+        for country in dbm_dict['countries']:
+            metadata.countries.add(country.strip())
+
         # Directors
         metadata.directors.clear()
         for director in dbm_dict['directors']:
@@ -146,9 +155,6 @@ class DBMAgent(Agent.Movies):
             d.name = director['name']
             if director['avatars']:
                 d.photo = director['avatars']['large']
-
-        # Writers
-        metadata.writers.clear()
 
         # Casts
         metadata.roles.clear()
